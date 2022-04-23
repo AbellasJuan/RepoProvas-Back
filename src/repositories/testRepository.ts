@@ -11,6 +11,15 @@ async function findTestsByCategoryId(categoryId: number){
  return testsByCategoryId
 };
 
+async function findCategoryName(categoryId: number){
+  return prisma.category.findUnique({
+    where: {
+     id: categoryId
+   }
+ });
+};
+
+
 async function findTestsByTeacherDiscipline(teacherDisciplineId: number){
   const testsByTeachers = await prisma.test.groupBy({
     by: ["id", "name", "pdfUrl", "categoryId", "teacherDisciplineId"],
@@ -40,18 +49,10 @@ async function findTeacherName(teacherId: number){
 };
 
 
-//TESTES FILTRADOS POR PROFS
-// async function findTestsByTeacherDiscipline(teacherDisciplineId: number){
-//  return prisma.test.groupBy({
-//     by: ["id", "name", "pdfUrl", "categoryId", "teacherDisciplineId"],
-//     where: {
-//      teacherDisciplineId
-//    }
-//  });
-// };
 
 export default {
   // findCategories,
+  findCategoryName,
   findTestsByCategoryId,
   findTestsByTeacherDiscipline
 };

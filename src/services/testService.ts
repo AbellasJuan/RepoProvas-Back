@@ -1,4 +1,4 @@
-import { Test } from "@prisma/client";
+import { Category, Test } from "@prisma/client";
 import testRepository from "../repositories/testRepository.js";
 
 
@@ -10,15 +10,19 @@ async function findTestsByTeacherDiscipline(teacherDisciplineId: number){
 
 async function findTestsByCategoryId(categoryId: number){
   const tests: Test[] = await testRepository.findTestsByCategoryId(categoryId);
+
+  const categoryData: Category = await testRepository.findCategoryName(categoryId);
+
   if(!tests) throw { type: "not_found" };
-  return tests;
+  if(!categoryData) throw { type: "not_found" };
+
+  const testsByCategories = [ categoryData.name, [ ...tests] ]
+
+  return testsByCategories;
 }
 
 
 export default {
-  // insertUser,
-  // signIn,
-  // findById,
   findTestsByCategoryId,
   findTestsByTeacherDiscipline
 };
