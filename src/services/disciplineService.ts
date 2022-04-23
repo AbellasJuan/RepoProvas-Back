@@ -1,10 +1,12 @@
-import { Term } from "@prisma/client";
-import termRepository from "../repositories/termRepository.js";
+
 
 // async function insertUser(createUserData: CreateUserData) {
 //   const existingUser = await userRepository.findByEmail(createUserData.email);
 //   if (existingUser)
 //     throw { type: "conflict", message: "Users must have unique emails" };
+
+import disciplineRepository from "../repositories/disciplineRepository.js";
+import { Discipline } from "@prisma/client";
 
 //   const hashedPassword = bcrypt.hashSync(createUserData.password, 12);
 
@@ -31,16 +33,16 @@ import termRepository from "../repositories/termRepository.js";
 //   return user;
 // };
 
-async function findAll(){
-  const terms: Term[] = await termRepository.findAllTerms();
-  if(!terms) throw { type: "not_found" };
+async function findByTerm(termId: number){
+  const disciplines: Discipline[] = await disciplineRepository.findDisciplines(termId);
+  if(!disciplines) throw { type: "not_found" };
 
-  return terms;
+  return disciplines;
 }
 
 export default {
   // insertUser,
   // signIn,
   // findById,
-  findAll
+  findByTerm
 };

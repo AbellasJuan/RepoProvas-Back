@@ -1,7 +1,7 @@
 import { Router } from "express";
 // import * as userController from "../controllers/userController.js";
 import { ensureAuthenticatedMiddleware } from "../middlewares/ensureAuthenticatedMiddleware.js";
-import { validateSchemaMiddleware } from "../middlewares/validateSchemaMiddleware.js";
+// import { validateSchemaMiddleware } from "../middlewares/validateSchemaMiddleware.js";
 // import { userSchema } from "../schemas/userSchema.js";
 import * as termController from "../controllers/termController.js";
 
