@@ -25,13 +25,13 @@ async function findTestsByTeacherDiscipline(teacherDisciplineId: number){
     by: ["id", "name", "pdfUrl", "categoryId", "teacherDisciplineId"],
     where: {
      teacherDisciplineId
-   }
+    }
  });
  return testsByTeachers
 };
 
 async function findTeacherId(teacherDisciplineId: number){
-  const teacherId = await prisma.teacherDiscipline.findFirst({
+  const teacherId = await prisma.teacher.findFirst({
     where: { 
       id: teacherDisciplineId  
     }
@@ -52,6 +52,7 @@ async function findTeacherName(teacherId: number){
 
 export default {
   // findCategories,
+  findTeacherId,
   findCategoryName,
   findTestsByCategoryId,
   findTestsByTeacherDiscipline
