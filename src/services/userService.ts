@@ -38,7 +38,7 @@ async function findById(id: number) {
 
 async function findAll(){
   const users = await userRepository.findAllUsers();
-  if(users) throw { type: "not_found" };
+  if(!users) throw { type: "not_found" };
 
   return users;
 }

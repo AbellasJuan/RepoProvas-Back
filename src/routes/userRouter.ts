@@ -7,8 +7,10 @@ import { userSchema } from "../schemas/userSchema.js";
 
 const userRouter = Router();
 
-userRouter.post("/sign-up", validateSchemaMiddleware(userSchema), userController.signUp);
-userRouter.post("/sign-in", validateSchemaMiddleware(userSchema), userController.signIn);
+userRouter.post("/auth/sign-up", validateSchemaMiddleware(userSchema), userController.signUp);
+userRouter.post("/auth/sign-in", validateSchemaMiddleware(userSchema), userController.signIn);
+
 userRouter.get("/users", ensureAuthenticatedMiddleware, userController.findAllUsers);
+userRouter.get("/user/:id", validateSchemaMiddleware(userSchema), userController.findById);
 
 export default userRouter;

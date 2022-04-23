@@ -3,7 +3,7 @@ import { User } from '@prisma/client';
 
 export type CreateUserData = Omit<User, "id">;
 
-async function findByEmail(email: string) {
+async function findByEmail(email: string){
   return prisma.user.findUnique({
     where: {
       email
@@ -11,7 +11,7 @@ async function findByEmail(email: string) {
   });
 }
 
-async function findById(id: number) {
+async function findById(id: number){
   return prisma.user.findUnique({
     where: {
       id,
@@ -19,7 +19,7 @@ async function findById(id: number) {
   });
 }
 
-async function insert(createUserData: CreateUserData) {
+async function insert(createUserData: CreateUserData){
   await prisma.user.create({
     data: createUserData
   });

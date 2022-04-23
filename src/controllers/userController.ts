@@ -22,4 +22,12 @@ export async function signIn(req: Request, res: Response){
 export async function findAllUsers(req: Request, res: Response){
   const users: User[] = await userService.findAll();
   res.send(users)
-}
+};
+
+export async function findById(req: Request, res: Response){
+
+  const { id } = req.params;
+
+  const user: CreateUserData = await userService.findById(Number(id));
+  res.send(user)
+};
