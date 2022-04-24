@@ -2,36 +2,24 @@ import { Category, Teacher, Test } from "@prisma/client";
 import testRepository from "../repositories/testRepository.js";
 
 
-async function findTestsByTeacherDiscipline(teacherDisciplineId: number){
-  const tests: Test[] = await testRepository.findTestsByTeacherDiscipline(teacherDisciplineId);
+async function findTestsByTerm(termId: number){
+  const tests = await testRepository.findTestsByTerm(termId);
+
   if(!tests) throw { type: "not_found" };
+
   return tests;
-}
+};
 
-async function findTestsByCategoryId(categoryId: number){
-  const tests: Test[] = await testRepository.findTestsByCategoryId(categoryId);
-  const categoryData: Category = await testRepository.findCategoryName(categoryId);
+async function findTestsByTeacherId(teacherId: number){
+  const testsByTeacher = await testRepository.findTestsByTeacherId(teacherId);
 
-  if(!tests) throw { type: "not_found" };
-  if(!categoryData) throw { type: "not_found" };
+  if(!testsByTeacher) throw { type: "not_found" };
 
-  let result = [];
-  let testsByCategoriesWithTeacherName = [];
-
-  for (let i = 0; i < tests.length; i++) {
-    const test = tests[i];
-    result.push(await testRepository.findTeacherId(test.teacherDisciplineId))
-
-    testsByCategoriesWithTeacherName = [ ...testsByCategoriesWithTeacherName, { ...test , 'teacherName': result[i].name } ] 
-  };
-
-  const testsByCategories = [ { category: categoryData.name, tests: testsByCategoriesWithTeacherName } ]
-
-  return testsByCategories;
+  return testsByTeacher;
 };
 
 
 export default {
-  findTestsByCategoryId,
-  findTestsByTeacherDiscipline
+  findTestsByTerm,
+  findTestsByTeacherId
 };

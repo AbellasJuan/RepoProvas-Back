@@ -1,16 +1,6 @@
 import { Teacher, TeacherDiscipline, Test } from "@prisma/client";
 import { prisma } from "../database.js";
 
-async function findTestsByCategoryId(categoryId: number){
-  const testsByCategoryId = await prisma.test.groupBy({
-    by: ["id", "name", "pdfUrl", "categoryId", "teacherDisciplineId"],
-    where: {
-     categoryId
-   }
- });
- return testsByCategoryId
-};
-
 async function findCategoryName(categoryId: number){
   return prisma.category.findUnique({
     where: {
@@ -19,15 +9,105 @@ async function findCategoryName(categoryId: number){
  });
 };
 
-
-async function findTestsByTeacherDiscipline(teacherDisciplineId: number){
-  const testsByTeachers = await prisma.test.groupBy({
-    by: ["id", "name", "pdfUrl", "categoryId", "teacherDisciplineId"],
-    where: {
-     teacherDisciplineId
+async function findTestsByTeacherId(teacherId: number){
+  const testByTeacher = await prisma.test.findMany({    
+    select: {
+      id: true,
+      name: true,
+      pdfUrl: true,
+      
+      category: { 
+        select: { 
+          name: true 
+        },
+      },
+    
+      teacherDiscipline: {
+        select:{ 
+          teacher: { 
+            select: {
+              name: true
+            },
+          },
+          discipline: { 
+            select: { 
+              name: true,
+              term: {
+                select: {
+                  number: true
+                },
+              },
+            },
+          },        
+        },
+      },
+    },
+    where: { 
+      teacherDiscipline: {
+        teacher:{
+          id: teacherId
+        }
+      },
+    },
+    orderBy:{
+      categoryId: 'asc'
     }
- });
- return testsByTeachers
+    
+  });
+
+ return testByTeacher
+};
+
+
+async function findTestsByTerm(termId: number){
+  const testsByTerm = await prisma.test.findMany({    
+    select: {
+      id: true,
+      name: true,
+      pdfUrl: true,
+      
+      category: { 
+        select: { 
+          name: true 
+        },
+      },
+    
+      teacherDiscipline: {
+        select:{ 
+          teacher: { 
+            select: {
+              name: true
+            },
+          },
+          discipline: { 
+            select: { 
+              name: true,
+              term: {
+                select: {
+                  number: true
+                },
+              },
+            },
+          },        
+        },
+      },
+    },
+    where: { 
+      teacherDiscipline: {
+        discipline: {
+          term: {
+            id: termId
+          }
+        }
+      },
+    },
+    orderBy:{
+      categoryId: 'asc'
+    }
+    
+  });
+
+ return testsByTerm
 };
 
 async function findTeacherId(teacherDisciplineId: number){
@@ -51,9 +131,8 @@ async function findTeacherName(teacherId: number){
 
 
 export default {
-  // findCategories,
   findTeacherId,
   findCategoryName,
-  findTestsByCategoryId,
-  findTestsByTeacherDiscipline
+  findTestsByTerm,
+  findTestsByTeacherId
 };
