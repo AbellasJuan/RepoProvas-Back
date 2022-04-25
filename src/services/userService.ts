@@ -12,6 +12,11 @@ async function findById(id: number) {
 async function findAll(){
   const users = await userRepository.findAllUsers();
   if(!users) throw { type: "not_found" };
+
+  users.map((user) => {
+    delete user.password;
+  });
+
   return users;
 };
 

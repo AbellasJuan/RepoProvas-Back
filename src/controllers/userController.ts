@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import userService from "../services/userService.js";
-import { CreateUserData } from "../repositories/userRepository.js";
+import { CreateUserData } from "../repositories/authRepository.js";
 import { User } from "@prisma/client";
 
 export async function findAllUsers(req: Request, res: Response){
