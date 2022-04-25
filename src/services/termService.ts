@@ -9,8 +9,5 @@ async function findAll(){
 }
 
 export default {
-  // insertUser,
-  // signIn,
-  // findById,
   findAll
 };
