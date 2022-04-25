@@ -1,4 +1,3 @@
-import { Teacher, TeacherDiscipline, Test } from "@prisma/client";
 import { prisma } from "../database.js";
 
 async function findCategoryName(categoryId: number){
@@ -15,7 +14,8 @@ async function findTestsByTeacherId(teacherId: number){
       id: true,
       name: true,
       pdfUrl: true,
-      
+      year: true,
+
       category: { 
         select: { 
           name: true 
@@ -58,14 +58,14 @@ async function findTestsByTeacherId(teacherId: number){
  return testByTeacher
 };
 
-
 async function findTestsByTerm(termId: number){
   const testsByTerm = await prisma.test.findMany({    
     select: {
       id: true,
       name: true,
       pdfUrl: true,
-      
+      year: true,
+
       category: { 
         select: { 
           name: true 
@@ -127,8 +127,6 @@ async function findTeacherName(teacherId: number){
   })
  return teacherName;
 };
-
-
 
 export default {
   findTeacherId,

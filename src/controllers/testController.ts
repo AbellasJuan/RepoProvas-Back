@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { Test } from "@prisma/client";
 import testService from "../services/testService.js";
-// import { Category, Test, Teacher, Term, Discipline, TeacherDiscipline } from "@prisma/client";
 
 export async function findTestsByTerm(req: Request, res: Response){
   const { termId } = req.params;
