@@ -29,7 +29,7 @@ model Test {
   pdfUrl              String
   categoryId          Int
   teacherDisciplineId Int
-  year                String            @default("unknown")
+  year                String            @default("2022.1")
   category            Category          @relation(fields: [categoryId], references: [id])
   teacherDiscipline   TeacherDiscipline @relation(fields: [teacherDisciplineId], references: [id])
 
