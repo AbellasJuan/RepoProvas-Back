@@ -23,7 +23,7 @@ async function signIn({ email, password }: CreateUserData) {
   if (!isPasswordValid)
   throw { type: "unauthorized", message: "Invalid credentials" };
 
-  const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET);
+  const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {expiresIn: "2 days"});
   return token;
 };
 
