@@ -1,15 +1,23 @@
 import { Request, Response } from "express";
 import userService from "../services/userService.js";
-import { CreateUserData } from "../repositories/authRepository.js";
-import { User } from "@prisma/client";
 
-export async function findAllUsers(req: Request, res: Response){
-  const users: User[] = await userService.findAll();
-  res.send(users)
-};
+async function signUp(req: Request, res: Response) {
+  const user = req.body;
 
-export async function findById(req: Request, res: Response){
-  const { id } = req.params;
-  const user: CreateUserData = await userService.findById(Number(id));
-  res.send(user)
+  await userService.signUp(user);
+
+  res.sendStatus(201);
+}
+
+async function signIn(req: Request, res: Response) {
+  const user = req.body;
+
+  const token = await userService.signIn(user);
+
+  res.send({ token });
+}
+
+export default {
+  signUp,
+  signIn,
 };

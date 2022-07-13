@@ -1,2 +1,0 @@
--- AlterTable
-ALTER TABLE "tests" ALTER COLUMN "year" SET DEFAULT E'2022.1';

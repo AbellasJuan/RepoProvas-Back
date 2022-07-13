@@ -1,18 +1,17 @@
 import testRepository from "../repositories/testRepository.js";
 
-async function findTestsByTerm(termId: number){
-  const tests = await testRepository.findTestsByTerm(termId);
-  if(!tests) throw { type: "not_found" };
-  return tests;
-};
+interface Filter {
+  groupBy: "disciplines" | "teachers";
+}
 
-async function findTestsByTeacherId(teacherId: number){
-  const testsByTeacher = await testRepository.findTestsByTeacherId(teacherId);
-  if(!testsByTeacher) throw { type: "not_found" };
-  return testsByTeacher;
-};
+async function find(filter: Filter) {
+  if (filter.groupBy === "disciplines") {
+    return testRepository.getTestsByDiscipline();
+  } else if (filter.groupBy === "teachers") {
+    return testRepository.getTestsByTeachers();
+  }
+}
 
 export default {
-  findTestsByTerm,
-  findTestsByTeacherId
+  find,
 };
